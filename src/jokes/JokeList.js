@@ -13,6 +13,7 @@ class JokeList extends Component {
       jokes: JSON.parse(window.localStorage.getItem("jokes")) || [],
     };
     this.handleVote = this.handleVote.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
   componentDidMount() {
     if (this.state.jokes.length === 0) this.getJokes();
@@ -22,14 +23,23 @@ class JokeList extends Component {
     this.setState({ jokes });
     window.localStorage.setItem("jokes", JSON.stringify(jokes));
   }
+  handleClick() {
+    this.getJokes();
+  }
   handleVote(id, delta) {
-    this.setState((st) => {
-      return {
-        jokes: st.jokes.map((joke) => {
-          return joke.id === id ? { ...joke, votes: joke.votes + delta } : joke;
-        }),
-      };
-    });
+    this.setState(
+      (st) => {
+        return {
+          jokes: st.jokes.map((joke) => {
+            return joke.id === id
+              ? { ...joke, votes: joke.votes + delta }
+              : joke;
+          }),
+        };
+      },
+      () =>
+        window.localStorage.setItem("jokes", JSON.stringify(this.state.jokes))
+    );
   }
   render() {
     return (
@@ -39,7 +49,9 @@ class JokeList extends Component {
             <span>Dad</span> Jokes
           </h1>
           <img src="https://assets.dryicons.com/uploads/icon/svg/8927/0eb14c71-38f2-433a-bfc8-23d9c99b3647.svg"></img>
-          <button className="JokeList-getmore">New Jokes</button>
+          <button onClick={this.handleClick} className="JokeList-getmore">
+            New Jokes
+          </button>
         </div>
 
         <div className="JokeList-jokes">
