@@ -20,8 +20,13 @@ class JokeList extends Component {
   }
   async getJokes() {
     const jokes = await loadJokes(this.props.numJokesToFetch);
-    this.setState({ jokes });
-    window.localStorage.setItem("jokes", JSON.stringify(jokes));
+    this.setState(
+      (st) => {
+        return { jokes: [...st.jokes, ...jokes] };
+      },
+      () =>
+        window.localStorage.setItem("jokes", JSON.stringify(this.state.jokes))
+    );
   }
   handleClick() {
     this.getJokes();
