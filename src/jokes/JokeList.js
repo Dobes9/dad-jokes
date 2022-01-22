@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Joke from "./Joke";
 import "./JokeList.css";
 import { loadJokes } from "../utils/apiCalls";
+import LoadingScreen from "../utils/LoadingScreen";
 
 class JokeList extends Component {
   static defaultProps = {
@@ -11,6 +12,7 @@ class JokeList extends Component {
     super(props);
     this.state = {
       jokes: JSON.parse(window.localStorage.getItem("jokes")) || [],
+      isLoading: false,
     };
     this.handleVote = this.handleVote.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -19,10 +21,11 @@ class JokeList extends Component {
     if (this.state.jokes.length === 0) this.getJokes();
   }
   async getJokes() {
+    this.setState({ isLoading: true });
     const jokes = await loadJokes(this.props.numJokesToFetch);
     this.setState(
       (st) => {
-        return { jokes: [...st.jokes, ...jokes] };
+        return { jokes: [...st.jokes, ...jokes], isLoading: false };
       },
       () =>
         window.localStorage.setItem("jokes", JSON.stringify(this.state.jokes))
@@ -47,6 +50,13 @@ class JokeList extends Component {
     );
   }
   render() {
+    if (this.state.isLoading) {
+      return (
+        <div className="JokeList-LoadingScreen">
+          <LoadingScreen />
+        </div>
+      );
+    }
     return (
       <div className="JokeList">
         <div className="JokeList-sidebar">
