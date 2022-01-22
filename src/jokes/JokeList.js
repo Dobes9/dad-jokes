@@ -14,6 +14,7 @@ class JokeList extends Component {
       jokes: JSON.parse(window.localStorage.getItem("jokes")) || [],
       isLoading: false,
     };
+    this.seenJokes = new Set(this.state.jokes.map((j) => j.joke));
     this.handleVote = this.handleVote.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
@@ -22,14 +23,19 @@ class JokeList extends Component {
   }
   async getJokes() {
     this.setState({ isLoading: true });
-    const jokes = await loadJokes(this.props.numJokesToFetch);
-    this.setState(
-      (st) => {
-        return { jokes: [...st.jokes, ...jokes], isLoading: false };
-      },
-      () =>
-        window.localStorage.setItem("jokes", JSON.stringify(this.state.jokes))
-    );
+    try {
+      const jokes = await loadJokes(this.props.numJokesToFetch, this.seenJokes);
+      this.setState(
+        (st) => {
+          return { jokes: [...st.jokes, ...jokes], isLoading: false };
+        },
+        () =>
+          window.localStorage.setItem("jokes", JSON.stringify(this.state.jokes))
+      );
+    } catch (err) {
+      alert(err);
+      this.setState({ isLoading: false });
+    }
   }
   handleClick() {
     this.getJokes();
