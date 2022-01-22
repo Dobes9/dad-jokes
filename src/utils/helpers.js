@@ -26,7 +26,7 @@ export function getEmoji(votes) {
   } else if (votes >= 6) {
     return "em em-slightly_smiling_face";
   } else if (votes >= 3) {
-    return "em em-neutra_face";
+    return "em em-neutral_face";
   } else if (votes >= 0) {
     return "em em-confused";
   } else {
