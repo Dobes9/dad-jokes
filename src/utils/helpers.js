@@ -1,35 +1,17 @@
-export function getColor(votes) {
+export function getColorAndEmoji(votes) {
   if (votes >= 15) {
-    return "#4CAF50";
+    return { color: "#4CAF50", emoji: "em em-rolling_on_the_floor_laughing" };
   } else if (votes >= 12) {
-    return "#8BC34A";
+    return { color: "#8BC34A", emoji: "em em-laughing" };
   } else if (votes >= 9) {
-    return "#CDDC39";
+    return { color: "#CDDC39", emoji: "em em-smiley" };
   } else if (votes >= 6) {
-    return "#FFEB3B";
+    return { color: "#FFEB3B", emoji: "em em-slightly_smiling_face" };
   } else if (votes >= 3) {
-    return "#FFC107";
+    return { color: "#FFC107", emoji: "em em-neutral_face" };
   } else if (votes >= 0) {
-    return "#FF9800";
+    return { color: "#FF9800", emoji: "em em-confused" };
   } else {
-    return "#f44336";
-  }
-}
-
-export function getEmoji(votes) {
-  if (votes >= 15) {
-    return "em em-rolling_on_the_floor_laughing";
-  } else if (votes >= 12) {
-    return "em em-laughing";
-  } else if (votes >= 9) {
-    return "em em-smiley";
-  } else if (votes >= 6) {
-    return "em em-slightly_smiling_face";
-  } else if (votes >= 3) {
-    return "em em-neutral_face";
-  } else if (votes >= 0) {
-    return "em em-confused";
-  } else {
-    return "em em-angry";
+    return { color: "#f44336", emoji: "em em-angry" };
   }
 }
