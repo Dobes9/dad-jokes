@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Joke from "./Joke";
-import axios from "axios";
 import "./JokeList.css";
 import { loadJokes } from "../utils/apiCalls";
 
@@ -31,8 +30,9 @@ class JokeList extends Component {
 
         <div className="JokeList-jokes">
           <ul>
-            {this.state.jokes.map((joke) => {
-              return <li className="Joke">{joke}</li>;
+            {this.state.jokes.map((j) => {
+              const { id, joke, votes } = j;
+              return <Joke key={id} joke={joke} votes={votes} />;
             })}
           </ul>
         </div>
