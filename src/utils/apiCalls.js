@@ -8,7 +8,8 @@ export async function loadJokes(numJokes) {
     const response = await axios.get(BASE_API_URL, {
       headers: { accept: "application/json" },
     });
-    jokes.push(response.data.joke);
+    const { joke, id } = response.data;
+    jokes.push({ joke, id, votes: 0 });
   }
   return jokes;
 }
