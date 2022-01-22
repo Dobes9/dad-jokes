@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { getColor } from "../utils/helpers";
 import "./Joke.css";
 
 class Joke extends Component {
@@ -21,7 +22,9 @@ class Joke extends Component {
       <div className="Joke">
         <div className="Joke-buttons">
           <i className="fas fa-arrow-up" onClick={this.handleUpVote}></i>
-          <span className="Joke-votes">{votes}</span>
+          <span style={{ borderColor: getColor(votes) }} className="Joke-votes">
+            {votes}
+          </span>
           <i className="fas fa-arrow-down" onClick={this.handleDownVote}></i>
         </div>
         <div className="Joke-text">{joke}</div>
