@@ -21,10 +21,17 @@ class Joke extends Component {
       <div className="Joke">
         <div className="Joke-buttons">
           <i className="fas fa-arrow-up" onClick={this.handleUpVote}></i>
-          <span>{votes}</span>
+          <span className="Joke-votes">{votes}</span>
           <i className="fas fa-arrow-down" onClick={this.handleDownVote}></i>
         </div>
         <div className="Joke-text">{joke}</div>
+        <div className="Joke-emoji">
+          <i
+            className="em em-rolling_on_the_floor_laughing"
+            aria-role="presentation"
+            aria-label="ROLLING ON THE FLOOR LAUGHING"
+          ></i>
+        </div>
       </div>
     );
   }
