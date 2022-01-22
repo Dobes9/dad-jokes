@@ -12,10 +12,20 @@ class JokeList extends Component {
     this.state = {
       jokes: [],
     };
+    this.handleVote = this.handleVote.bind(this);
   }
   async componentDidMount() {
     // load jokes
     this.setState({ jokes: await loadJokes(this.props.numJokesToFetch) });
+  }
+  handleVote(id, delta) {
+    this.setState((st) => {
+      return {
+        jokes: st.jokes.map((joke) => {
+          return joke.id === id ? { ...joke, votes: joke.votes + delta } : joke;
+        }),
+      };
+    });
   }
   render() {
     return (
@@ -32,7 +42,15 @@ class JokeList extends Component {
           <ul>
             {this.state.jokes.map((j) => {
               const { id, joke, votes } = j;
-              return <Joke key={id} joke={joke} votes={votes} />;
+              return (
+                <Joke
+                  handleVote={this.handleVote}
+                  id={id}
+                  key={id}
+                  joke={joke}
+                  votes={votes}
+                />
+              );
             })}
           </ul>
         </div>
