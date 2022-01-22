@@ -10,13 +10,17 @@ class JokeList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      jokes: [],
+      jokes: JSON.parse(window.localStorage.getItem("jokes")) || [],
     };
     this.handleVote = this.handleVote.bind(this);
   }
-  async componentDidMount() {
-    // load jokes
-    this.setState({ jokes: await loadJokes(this.props.numJokesToFetch) });
+  componentDidMount() {
+    if (this.state.jokes.length === 0) this.getJokes();
+  }
+  async getJokes() {
+    const jokes = await loadJokes(this.props.numJokesToFetch);
+    this.setState({ jokes });
+    window.localStorage.setItem("jokes", JSON.stringify(jokes));
   }
   handleVote(id, delta) {
     this.setState((st) => {
