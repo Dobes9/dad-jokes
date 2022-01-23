@@ -83,7 +83,7 @@ class JokeList extends Component {
             alt="joy emoji"
           ></img>
           <button onClick={this.handleClick} className="JokeList-getmore">
-            New Jokes
+            Fetch Jokes
           </button>
         </div>
 
